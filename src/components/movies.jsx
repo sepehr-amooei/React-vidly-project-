@@ -100,47 +100,64 @@
 import React, { Component } from 'react';
 import { getMovies } from '../services/fakeMovieService';
 import Like from './common/like';
+import Pagination from './common/pagination';
+import paginate from '../utils/paginate';
 
 class Movies extends Component {
  state = { 
-  movies: getMovies(),
+    movies: getMovies(),
+    pageSize: 4,
+    currentPage: 1,
  }
 
  handleDelete = item => {
-  const movies = this.state.movies.filter(m => m._id !== item._id);
-  this.setState({
-   movies,
+    const movies = this.state.movies.filter(m => m._id !== item._id);
+    this.setState({
+    movies,
   })
- }
+  }
+  
   handleLike = item => {
     const movies = this.state.movies;
     const index = movies.indexOf(item);
     movies[index] = { ...item };
     movies[index].liked = !movies[index].liked;
     this.setState({ movies });
- }
- render() { 
-  const { movies } = this.state;
-  const { length: count } = this.state.movies;
+  }
+  
+  handlePageChange = item => {
+    const currentPage = item;
+    this.setState({ currentPage });
+  }
+  render() { 
+    const { movies: allMovies, currentPage, pageSize } = this.state;
+    const movies = paginate(allMovies, currentPage, pageSize);
+    const { length: count } = allMovies;
   if (count === 0) return <p>There are no movies in the databas</p>;
   return (
-   <React.Fragment>
-   <p>Showing {count} movies in the database</p>
-   <table className="table">
-    <thead>
-     <tr>
-      <th scope="col">Title</th>
-      <th scope="col">Genre</th>
-      <th scope="col">Stock</th>
-      <th scope="col">Rate</th>
-      <th scope="col"></th>
-      <th scope="col"></th>
-     </tr>
-    </thead>
-    <tbody>
-     {this.renderList(movies)}
-    </tbody>
+    <React.Fragment>
+    <p>Showing {count} movies in the database</p>
+    <table className="table">
+      <thead>
+      <tr>
+        <th scope="col">Title</th>
+        <th scope="col">Genre</th>
+        <th scope="col">Stock</th>
+        <th scope="col">Rate</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+      </thead>
+      <tbody>
+      {this.renderList(movies)}
+      </tbody>
     </table>
+      <Pagination
+        pageSize={pageSize}
+        itemCount={count}
+        currentPage={currentPage}
+        onPageChange={this.handlePageChange}
+      />
    </React.Fragment>
   );
  }
