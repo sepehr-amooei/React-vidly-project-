@@ -1,15 +1,16 @@
 import React from 'react';
 import Like from './common/like';
 
-const MoviesTable = ({movies, onDelete, onLike, onSort}) => {
+const MoviesTable = ({movies, order, onDelete, onLike, onSort}) => {
  return ( 
   <table className="table">
    <thead>
      <tr>
-      <th onClick ={() => onSort('title')} scope="col">Title</th>
-      <th onClick ={() => onSort('genre.name')} scope="col">Genre</th>
-      <th onClick ={() => onSort('numberInStock')} scope="col">Stock</th>
-      <th onClick ={() => onSort('dailyRentalRate')} scope="col">Rate</th>
+      <th  scope="col">Title<i style={{cursor : 'pointer'}} onClick={() => onSort('title')} className="fa fa-sort m-2" aria-hidden="true"></i></th>
+      
+      <th  scope="col">Genre<i style={{cursor : 'pointer'}} onClick ={() => onSort('genre.name')} className="fa fa-sort m-2" aria-hidden="true"></i></th>
+      <th  scope="col">Stock<i style={{cursor : 'pointer'}} onClick ={() => onSort('numberInStock')} className="fa fa-sort m-2" aria-hidden="true"></i></th>
+      <th  scope="col">Rate<i style={{cursor : 'pointer'}} onClick ={() => onSort('dailyRentalRate')} className="fa fa-sort m-2" aria-hidden="true"></i></th>
       <th scope="col"></th>
       <th scope="col"></th>
      </tr>
@@ -32,4 +33,5 @@ const MoviesTable = ({movies, onDelete, onLike, onSort}) => {
   </table>
  );
 }
+
 export default MoviesTable;
