@@ -13,3 +13,6 @@ code {
     monospace;
 }
 
+.clickable{
+  cursor: pointer;
+}

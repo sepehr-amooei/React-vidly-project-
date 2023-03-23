@@ -86,23 +86,6 @@ class Movies extends Component {
     </React.Fragment>
     );
   }
-//   renderList(movieList) {
-//     return movieList.map(movie => {
-//     return (
-//       <tr key={movie._id}>
-//       <td>{ movie.title }</td>
-//       <td>{ movie.genre.name}</td>
-//       <td>{ movie.numberInStock }</td>
-//       <td>{movie.dailyRentalRate}</td>
-//       <td>
-//           <Like liked={movie.liked} onClick={ () => this.handleLike(movie) } />
-//       </td>
-//       <td>
-//         <button className="btn btn-danger btn-sm" onClick={()=> this.handleDelete(movie)} >Delete</button>
-//       </td>
-//     </tr>)
-//   })
-// }
 }
 
 export default Movies;
