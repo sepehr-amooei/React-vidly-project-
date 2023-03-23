@@ -1,32 +1,27 @@
 import React, { Component } from 'react';
+import TableHeader from './common/tableHeader';
 import Like from './common/like';
 
 class MoviesTable extends Component {
-  raiseSort = path => {
-        const sortColumn = { ...this.props.sortColumn };
-    if (sortColumn.path === path)
-      sortColumn.order = (sortColumn.order === 'asc') ? 'desc' : 'asc';
-    else {
-      sortColumn.path = path;
-      sortColumn.order = 'asc';
-    }
-    this.props.onSort(sortColumn)
-  }
+    columns = [
+      { path: 'title', lable: 'Title' },
+      { path: 'genre.name', lable: 'Genre' },
+      { path: 'numberInStock', lable: 'Stock' },
+      { path: 'dailyRentalRate', lable: 'Rate' },
+      { key: 'like' },
+      { key: 'delete' },
+      
+    ]
   render() { 
-    const { movies, onDelete, onLike} = this.props;
+
+    const { movies, sortColumn, onDelete, onLike, onSort } = this.props;
     return (
       <table className="table">
-    <thead>
-    <tr>
-      <th  scope="col">Title<i style={{cursor : 'pointer'}} onClick={() => this.raiseSort('title')} className="fa fa-sort m-2" aria-hidden="true"></i></th>
-      
-      <th  scope="col">Genre<i style={{cursor : 'pointer'}} onClick ={() => this.raiseSort('genre.name')} className="fa fa-sort m-2" aria-hidden="true"></i></th>
-      <th  scope="col">Stock<i style={{cursor : 'pointer'}} onClick ={() => this.raiseSort('numberInStock')} className="fa fa-sort m-2" aria-hidden="true"></i></th>
-      <th  scope="col">Rate<i style={{cursor : 'pointer'}} onClick ={() => this.raiseSort('dailyRentalRate')} className="fa fa-sort m-2" aria-hidden="true"></i></th>
-      <th scope="col"></th>
-      <th scope="col"></th>
-    </tr>
-    </thead>
+        <TableHeader
+          column={this.columns}
+          sortColumn={sortColumn}
+          onSort={onSort}
+        />
     <tbody>
     {movies.map(movie => (
       <tr key={movie._id}>
