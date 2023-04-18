@@ -15,20 +15,21 @@ class LoginForm extends Component {
  };
 
   schema = {
-    username: Joi.string().required(),
-    password: Joi.string().required()
+    username: Joi.string().required().label("Username"),
+    password: Joi.string().required().label("Password")
   }
 
   validate = () => {//validate entire form
-    const resault = Joi.validate(this.state.account, this.schema, {abortEarly: false});
-    console.log(resault);
-    const errors = {};
 
-  const { account } = this.state;
-  if (account.username.trim() === '') errors.username = 'Username is requierd';
-  if (account.password.trim() === '') errors.password = 'Password is requierd';
+    const {error} = Joi.validate(this.state.account, this.schema, { abortEarly: false });
+    
+    if (!error) return null;
+    const errors = {};
+      for (let item of error.details) {
+      errors[item.path[0]] = item.message;
+    }
   
-  return (Object.keys(errors).length === 0 ? null : errors);
+    return errors;
 }
 
  handleSubmit = e => {
@@ -40,14 +41,10 @@ class LoginForm extends Component {
   console.log("Submitted");
   }
   validateProperty = ({name, value}) => {//validate on input
-    if (name === 'username') {
-      if (value.trim() === '') return 'Username is required';
-      //...
-    }
-    if (name === 'password') {
-      if (value.trim() === '') return 'Password is required';
-      //...
-    } 
+    const obj = { [name]: value };
+    const schema = { [name]: this.schema[name] }
+    const { error } = Joi.validate(obj, schema);// we want to abort early, beacuse there might be more than one validation errors with the given field, we dont want to display all those validation errors at once, beacuse form a usibility point of view that is confusing. 
+    return error ? error.details[0].message : null;
   }
 
   handleChange = ({ currentTarget: input }) => {
@@ -58,7 +55,8 @@ class LoginForm extends Component {
 
   const account = { ...this.state.account };
   account[input.name] = input.value;
-  this.setState({account, errors});
+    this.setState({ account, errors });
+    
  }
 
  render() { 
