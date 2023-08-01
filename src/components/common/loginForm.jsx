@@ -9,7 +9,7 @@ class LoginForm extends Component {
   // }
 
   state = {
-    account: { username: "", password: "" },
+    data: { username: "", password: "" },
     errors: {},
   };
 
@@ -21,7 +21,7 @@ class LoginForm extends Component {
   validate = () => {
     //validate entire form
 
-    const { error } = Joi.validate(this.state.account, this.schema, {
+    const { error } = Joi.validate(this.state.data, this.schema, {
       abortEarly: false,
     });
 
@@ -56,13 +56,13 @@ class LoginForm extends Component {
     if (errorMassage) errors[input.name] = errorMassage;
     else delete errors[input.name];
 
-    const account = { ...this.state.account };
-    account[input.name] = input.value;
-    this.setState({ account, errors });
+    const data = { ...this.state.data };
+    data[input.name] = input.value;
+    this.setState({ data, errors });
   };
 
   render() {
-    const { account, errors } = this.state;
+    const { data, errors } = this.state;
     return (
       <div>
         <h1>Login</h1>
@@ -70,14 +70,14 @@ class LoginForm extends Component {
           <Input
             name="username"
             label="Username"
-            value={account.username}
+            value={data.username}
             onChange={this.handleChange}
             error={errors.username}
           />
           <Input
             name="password"
             label="Password"
-            value={account.password}
+            value={data.password}
             onChange={this.handleChange}
             error={errors.password}
           />
