@@ -8,6 +8,7 @@ import Customers from "./components/customers";
 import NotFound from "./components/notFound";
 import LoginForm from "./components/common/loginForm";
 import "./App.css";
+import RegisterForm from "./components/common/registerForm";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/not-found" Component={NotFound} />
           <Route path="/customers" Component={Customers} />
           <Route path="/Login" Component={LoginForm} />
+          <Route path="/register" Component={RegisterForm} />
           <Route path="/" element={<Navigate to="/movies" />} />
           <Route path="*" element={<Navigate to="/not-found" />} />
         </Routes>
