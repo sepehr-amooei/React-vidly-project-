@@ -16,7 +16,6 @@ function App() {
       <NavBar />
       <main className="container">
         <Routes>
-          <Route path="/movies/new" Component={MovieFormWithRouter} />
           <Route path="/movies/:id" Component={MovieFormWithRouter} />
           <Route path="/movies" Component={Movies} />
           <Route path="/Rental" Component={Rental} />

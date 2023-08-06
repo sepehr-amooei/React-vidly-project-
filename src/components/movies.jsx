@@ -62,7 +62,11 @@ class Movies extends Component {
       selectedGenre && selectedGenre._id
         ? allMovies.filter((movie) => movie.genre._id === selectedGenre._id)
         : allMovies;
-    const sorted = _.orderBy(filterd, [sortColumn.path], [sortColumn.order]);
+    const sorted = _.orderBy(
+      filterd,
+      [sortColumn.path.toLowerCase()],
+      [sortColumn.order]
+    );
     const movies = paginate(sorted, currentPage, pageSize);
     return { totalCount: filterd.length, data: movies };
   };
