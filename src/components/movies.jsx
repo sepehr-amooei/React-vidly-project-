@@ -90,7 +90,32 @@ class Movies extends Component {
     } = this.state;
 
     const { totalCount, data: movies } = this.getPageData();
-    if (totalCount === 0) return <p>There are no movies in the databas</p>;
+    if (totalCount === 0)
+      return (
+        <React.Fragment>
+          <div className="row">
+            <div className="col-3">
+              <ListGroup
+                items={genres}
+                selectedItem={selectedGenre}
+                onItemSelect={this.handleGenreSelect}
+              />
+            </div>
+            <div className="col">
+              <Link
+                to="/movies/new"
+                className="btn btn-primary"
+                style={{ marginBottom: 20 }}
+              >
+                New Movie
+              </Link>
+              <SearchBox value={searchQuery} onChange={this.handleSearch} />
+              <p>There are no movies in the databas</p>
+            </div>
+          </div>
+        </React.Fragment>
+      );
+
     return (
       <React.Fragment>
         <div className="row">
